@@ -31,11 +31,33 @@ namespace QuineMcCuskeyCSharp
 
             var primeImplicants = GetNecessaryPrimeImplicants(all, bits, minList);
 
-            foreach (var item in primeImplicants)
-            {
-                Console.WriteLine(item);
-            }
+            OutputImplicants(primeImplicants);
             Console.ReadKey();
+        }
+
+        static void OutputImplicants(List<string> list)
+        {
+            list = list.Select(x => ConvertToABC(x)).ToList();
+            Console.WriteLine(String.Join(" + ", list));
+        }
+
+        static string ConvertToABC(string s)
+        {
+            char c = 'A';
+            string f = "";
+            foreach(var p in s)
+            {
+                if(p != '-')
+                {
+                    f += c;
+                }
+                if(p == '0')
+                {
+                    f += '\'';
+                }
+                c++;
+            }
+            return f;
         }
 
         static List<string> GetNecessaryPrimeImplicants(List<int> minList, int bits, List<int> necessary)
